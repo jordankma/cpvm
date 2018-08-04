@@ -1,0 +1,36 @@
+{
+  "name": "adtech/core",
+  "description": "core",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "electric",
+      "email": "huydien.it@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.6.4",
+    "illuminate/notifications": "^5.4",
+    "illuminate/support": "^5.4"
+  },
+  "require-dev": {
+    "mockery/mockery": "^0.9.5",
+    "phpunit/phpunit": "4.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Adtech\\Core\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Adtech\\Core\\Test\\": "tests"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit"
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

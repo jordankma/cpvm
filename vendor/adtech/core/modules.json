@@ -1,0 +1,172 @@
+{
+  "package": "adtech",
+  "module": "core",
+  "description": "Permission route by group",
+  "details": [
+    {
+      "name": "Quản lý Role",
+      "groups": [
+        {
+          "name": "View list",
+          "routes": [
+            "adtech.core.role.manage",
+            "adtech.core.role.data"
+          ]
+        },
+        {
+          "name": "Create",
+          "routes": [
+            "adtech.core.role.create",
+            "adtech.core.role.add"
+          ]
+        },
+        {
+          "name": "Update",
+          "routes": [
+            "adtech.core.role.show",
+            "adtech.core.role.update"
+          ]
+        },
+        {
+          "name": "Delete",
+          "routes": [
+            "adtech.core.role.delete",
+            "adtech.core.role.confirm-delete"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Quản lý User",
+      "groups": [
+        {
+          "name": "View list",
+          "routes": [
+            "adtech.core.user.manage",
+            "adtech.core.user.data"
+          ]
+        },
+        {
+          "name": "Create",
+          "routes": [
+            "adtech.core.user.create",
+            "adtech.core.user.add"
+          ]
+        },
+        {
+          "name": "Update",
+          "routes": [
+            "adtech.core.user.show",
+            "adtech.core.user.update"
+          ]
+        },
+        {
+          "name": "Delete",
+          "routes": [
+            "adtech.core.user.delete",
+            "adtech.core.user.confirm-delete"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Quản lý Domain",
+      "groups": [
+        {
+          "name": "View list",
+          "routes": [
+            "adtech.core.domain.manage",
+            "adtech.core.domain.data"
+          ]
+        },
+        {
+          "name": "Create",
+          "routes": [
+            "adtech.core.domain.create",
+            "adtech.core.domain.add"
+          ]
+        },
+        {
+          "name": "Update",
+          "routes": [
+            "adtech.core.domain.show",
+            "adtech.core.domain.update"
+          ]
+        },
+        {
+          "name": "Delete",
+          "routes": [
+            "adtech.core.domain.delete",
+            "adtech.core.domain.confirm-delete"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Quản lý Package",
+      "groups": [
+        {
+          "name": "View list",
+          "routes": [
+            "adtech.core.package.manage",
+            "adtech.core.package.data"
+          ]
+        },
+        {
+          "name": "Create",
+          "routes": [
+            "adtech.core.package.create",
+            "adtech.core.package.add"
+          ]
+        },
+        {
+          "name": "Update",
+          "routes": [
+            "adtech.core.package.show",
+            "adtech.core.package.update"
+          ]
+        },
+        {
+          "name": "Delete",
+          "routes": [
+            "adtech.core.package.delete",
+            "adtech.core.package.confirm-delete"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Quản lý Menu",
+      "groups": [
+        {
+          "name": "View list",
+          "routes": [
+            "adtech.core.menu.manage",
+            "adtech.core.menu.data"
+          ]
+        },
+        {
+          "name": "Create",
+          "routes": [
+            "adtech.core.menu.create",
+            "adtech.core.menu.add"
+          ]
+        },
+        {
+          "name": "Update",
+          "routes": [
+            "adtech.core.menu.show",
+            "adtech.core.menu.update"
+          ]
+        },
+        {
+          "name": "Delete",
+          "routes": [
+            "adtech.core.menu.delete",
+            "adtech.core.menu.confirm-delete"
+          ]
+        }
+      ]
+    }
+  ]
+}
