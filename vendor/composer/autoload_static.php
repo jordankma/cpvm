@@ -148,6 +148,10 @@ class ComposerStaticInitfd4f5ae2ab00e73caf8371ecb4ea05b1
         'C' => 
         array (
             'Cron\\' => 5,
+            'Cpvm\\Subject\\' => 13,
+            'Cpvm\\Level\\' => 11,
+            'Cpvm\\Classes\\' => 13,
+            'Cpvm\\Class\\' => 11,
             'Collective\\Html\\' => 16,
             'Cartalyst\\Support\\' => 18,
             'Cartalyst\\Sentinel\\' => 19,
@@ -437,6 +441,22 @@ class ComposerStaticInitfd4f5ae2ab00e73caf8371ecb4ea05b1
         'Cron\\' => 
         array (
             0 => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron',
+        ),
+        'Cpvm\\Subject\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/packages/cpvm/subject/src',
+        ),
+        'Cpvm\\Level\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/packages/cpvm/level/src',
+        ),
+        'Cpvm\\Classes\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/packages/cpvm/classes/src',
+        ),
+        'Cpvm\\Class\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/packages/cpvm/class/src',
         ),
         'Collective\\Html\\' => 
         array (
@@ -777,6 +797,22 @@ class ComposerStaticInitfd4f5ae2ab00e73caf8371ecb4ea05b1
         'Collective\\Html\\HtmlBuilder' => __DIR__ . '/..' . '/laravelcollective/html/src/HtmlBuilder.php',
         'Collective\\Html\\HtmlFacade' => __DIR__ . '/..' . '/laravelcollective/html/src/HtmlFacade.php',
         'Collective\\Html\\HtmlServiceProvider' => __DIR__ . '/..' . '/laravelcollective/html/src/HtmlServiceProvider.php',
+        'Cpvm\\Class\\App\\Http\\Controllers\\DemoController' => __DIR__ . '/../..' . '/packages/cpvm/class/src/app/Http/Controllers/DemoController.php',
+        'Cpvm\\Class\\App\\Models\\Demo' => __DIR__ . '/../..' . '/packages/cpvm/class/src/app/Models/Demo.php',
+        'Cpvm\\Class\\App\\Repositories\\DemoRepository' => __DIR__ . '/../..' . '/packages/cpvm/class/src/app/Repositories/DemoRepository.php',
+        'Cpvm\\Classes\\App\\Http\\Controllers\\DemoController' => __DIR__ . '/../..' . '/packages/cpvm/classes/src/app/Http/Controllers/DemoController.php',
+        'Cpvm\\Classes\\App\\Models\\Demo' => __DIR__ . '/../..' . '/packages/cpvm/classes/src/app/Models/Demo.php',
+        'Cpvm\\Classes\\App\\Repositories\\DemoRepository' => __DIR__ . '/../..' . '/packages/cpvm/classes/src/app/Repositories/DemoRepository.php',
+        'Cpvm\\Classes\\ClassServiceProvider' => __DIR__ . '/../..' . '/packages/cpvm/class/src/ClassServiceProvider.php',
+        'Cpvm\\Classes\\ClassesServiceProvider' => __DIR__ . '/../..' . '/packages/cpvm/classes/src/ClassesServiceProvider.php',
+        'Cpvm\\Level\\App\\Http\\Controllers\\LevelController' => __DIR__ . '/../..' . '/packages/cpvm/level/src/app/Http/Controllers/LevelController.php',
+        'Cpvm\\Level\\App\\Models\\Level' => __DIR__ . '/../..' . '/packages/cpvm/level/src/app/Models/Level.php',
+        'Cpvm\\Level\\App\\Repositories\\LevelRepository' => __DIR__ . '/../..' . '/packages/cpvm/level/src/app/Repositories/LevelRepository.php',
+        'Cpvm\\Level\\LevelServiceProvider' => __DIR__ . '/../..' . '/packages/cpvm/level/src/LevelServiceProvider.php',
+        'Cpvm\\Subject\\App\\Http\\Controllers\\DemoController' => __DIR__ . '/../..' . '/packages/cpvm/subject/src/app/Http/Controllers/DemoController.php',
+        'Cpvm\\Subject\\App\\Models\\Demo' => __DIR__ . '/../..' . '/packages/cpvm/subject/src/app/Models/Demo.php',
+        'Cpvm\\Subject\\App\\Repositories\\DemoRepository' => __DIR__ . '/../..' . '/packages/cpvm/subject/src/app/Repositories/DemoRepository.php',
+        'Cpvm\\Subject\\SubjectServiceProvider' => __DIR__ . '/../..' . '/packages/cpvm/subject/src/SubjectServiceProvider.php',
         'CreateActivityLogTable' => __DIR__ . '/../..' . '/packages/adtech/core/src/database/migrations/2018_06_02_083923_create_activity_log_table.php',
         'CreateAdtechCoreAclTable' => __DIR__ . '/../..' . '/packages/adtech/core/src/database/migrations/2017_04_30_100000_create_adtech_core_acl_table.php',
         'CreateAdtechCoreDomainsPackageTable' => __DIR__ . '/../..' . '/packages/adtech/core/src/database/migrations/2018_05_17_101120_create_adtech_core_domains_package_table.php',
@@ -788,6 +824,9 @@ class ComposerStaticInitfd4f5ae2ab00e73caf8371ecb4ea05b1
         'CreateAdtechCoreRolesTable' => __DIR__ . '/../..' . '/packages/adtech/core/src/database/migrations/2017_04_20_100000_create_adtech_core_roles_table.php',
         'CreateAdtechCoreUsersRoleTable' => __DIR__ . '/../..' . '/packages/adtech/core/src/database/migrations/2017_04_20_100002_create_adtech_core_users_role_table.php',
         'CreateAdtechCoreUsersTable' => __DIR__ . '/../..' . '/packages/adtech/core/src/database/migrations/2017_04_20_100001_create_adtech_core_users_table.php',
+        'CreateCpvmClassHasSubjectTable' => __DIR__ . '/../..' . '/packages/cpvm/class/src/database/migrations/2018_08_06_094509_create_cpvm_class_has_subject_table.php',
+        'CreateCpvmClassTable' => __DIR__ . '/../..' . '/packages/cpvm/class/src/database/migrations/2018_08_06_094531_create_cpvm_class_table.php',
+        'CreateCpvmLevelTable' => __DIR__ . '/../..' . '/packages/cpvm/level/src/database/migrations/2018_08_06_095840_create_cpvm_level_table.php',
         'Cron\\AbstractField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/AbstractField.php',
         'Cron\\CronExpression' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/CronExpression.php',
         'Cron\\DayOfMonthField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/DayOfMonthField.php',
