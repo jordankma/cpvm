@@ -1,22 +1,20 @@
 <?php
 
-namespace Cpvm\Subject\App\Models;
+namespace Cpvm\Block\App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Demo extends Model {
+class BlockHasSubject extends Model {
     use SoftDeletes;
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'tbl_demo';
+    protected $table = 'block_has_subject';
 
-    protected $primaryKey = 'demo_id';
-
-    protected $fillable = ['name'];
+    protected $primaryKey = 'block_has_subject_id';
 
     protected $dates = ['deleted_at'];
 }

@@ -24,8 +24,9 @@ class ClassesRepository extends Repository
 
         DB::statement(DB::raw('set @rownum=0'));
         $result = $this->model::query();
-        $result->select('cpvm_classes.*', DB::raw('@rownum  := @rownum  + 1 AS rownum'));
+        $result->select('classes.*', DB::raw('@rownum  := @rownum  + 1 AS rownum'));
 
         return $result;
     }
+
 }

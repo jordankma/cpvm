@@ -76,7 +76,7 @@ return array(
     'Cpvm\\Subject\\' => array($baseDir . '/packages/cpvm/subject/src'),
     'Cpvm\\Level\\' => array($baseDir . '/packages/cpvm/level/src'),
     'Cpvm\\Classes\\' => array($baseDir . '/packages/cpvm/classes/src'),
-    'Cpvm\\Class\\' => array($baseDir . '/packages/cpvm/class/src'),
+    'Cpvm\\Block\\' => array($baseDir . '/packages/cpvm/block/src'),
     'Collective\\Html\\' => array($vendorDir . '/laravelcollective/html/src'),
     'Cartalyst\\Support\\' => array($vendorDir . '/cartalyst/support/src'),
     'Cartalyst\\Sentinel\\' => array($vendorDir . '/cartalyst/sentinel/src'),

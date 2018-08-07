@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 {{-- Page title --}}
-@section('title'){{ $title = trans('cpvm-subject::language.titles.demo.update') }}@stop
+@section('title'){{ $title = trans('cpvm-block::language.titles.demo.update') }}@stop
 
 {{-- page styles --}}
 @section('header_styles')
@@ -30,12 +30,12 @@
         <!--main content-->
         <div class="row">
             <div class="the-box no-border">
-                {!! Form::model($demo, ['url' => route('cpvm.subject.demo.update'), 'method' => 'put', 'class' => 'bf', 'files'=> true]) !!}
+                {!! Form::model($demo, ['url' => route('cpvm.block.demo.update'), 'method' => 'put', 'class' => 'bf', 'files'=> true]) !!}
                 <div class="row">
                     <div class="col-sm-8">
                         <label>Demo Name</label>
                         <div class="form-group {{ $errors->first('title', 'has-error') }}">
-                            {!! Form::text('name', null, array('class' => 'form-control', 'autofocus'=>'autofocus', 'placeholder'=>trans('cpvm-subject::language.placeholder.demo.name_here'))) !!}
+                            {!! Form::text('name', null, array('class' => 'form-control', 'autofocus'=>'autofocus', 'placeholder'=>trans('cpvm-block::language.placeholder.demo.name_here'))) !!}
                             <span class="help-block">{{ $errors->first('title', ':message') }}</span>
                         </div>
                         <div class="form-group">
@@ -47,8 +47,8 @@
                         <label for="blog_category" class="">Actions</label>
                         <div class="form-group">
                             <button type="submit" class="btn btn-success">{{ trans('adtech-core::buttons.save') }}</button>
-                            <a href="{!! route('cpvm.subject.demo.create') !!}"
-                               class="btn btn-danger">{{ trans('cpvm-subject::language.buttons.discard') }}</a>
+                            <a href="{!! route('cpvm.block.demo.create') !!}"
+                               class="btn btn-danger">{{ trans('cpvm-block::language.buttons.discard') }}</a>
                         </div>
                     </div>
                     <!-- /.col-sm-4 --> </div>

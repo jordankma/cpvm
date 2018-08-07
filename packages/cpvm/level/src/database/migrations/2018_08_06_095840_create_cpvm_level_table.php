@@ -13,7 +13,7 @@ class CreateCpvmLevelTable extends Migration
      */
     public function up()
     {
-        Schema::connection('mysql_cpvm')->create('cpvm_level', function (Blueprint $table) {
+        Schema::connection('mysql_cpvm')->create('level', function (Blueprint $table) {
             $table->increments('level_id');
             $table->string('create_by')->comment('nguoi tao mon');
             $table->string('name');
@@ -38,6 +38,6 @@ class CreateCpvmLevelTable extends Migration
      */
     public function down()
     {
-        Schema::connection('mysql_cpvm')->dropIfExists('cpvm_level');
+        Schema::connection('mysql_cpvm')->dropIfExists('level');
     }
 }

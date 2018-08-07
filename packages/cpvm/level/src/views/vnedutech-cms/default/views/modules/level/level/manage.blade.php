@@ -35,7 +35,7 @@
                         {{ $title }}
                     </h4>
                     <div class="pull-right">
-                        @if ($USER_LOGGED->canAccess('dhcd.member.member.create'))
+                        @if ($USER_LOGGED->canAccess('cpvm.level.level.create'))
                             <a href="{{ route('cpvm.level.level.create') }}" class="btn btn-sm btn-default">
                             <span class="glyphicon glyphicon-plus"></span> {{ trans('cpvm-level::language.buttons.create') }}</a>
                         @endif

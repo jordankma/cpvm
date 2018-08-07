@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 {{-- Page title --}}
-@section('title'){{ $title = trans('cpvm-subject::language.titles.demo.manage') }}@stop
+@section('title'){{ $title = trans('cpvm-subject::language.titles.subject.manage') }}@stop
 
 {{-- page level styles --}}
 @section('header_styles')
@@ -16,8 +16,8 @@
         <h1>{{ $title }}</h1>
         <ol class="breadcrumb">
             <li>
-                <a href="{{ route('backend.homepage') }}"> <i class="livicon" data-name="home" data-size="16"
-                                                             data-color="#000"></i>
+                <a href="{{ route('backend.homepage') }}"> 
+                    <i class="livicon" data-name="home" data-size="16" data-color="#000"></i>
                     {{ trans('adtech-core::labels.home') }}
                 </a>
             </li>
@@ -30,13 +30,17 @@
         <div class="row">
             <div class="panel panel-primary ">
                 <div class="panel-heading clearfix">
-                    <h4 class="panel-title pull-left"><i class="livicon" data-name="users" data-size="16"
-                                                         data-loop="true" data-c="#fff" data-hc="white"></i>
+                    <h4 class="panel-title pull-left">
+                        <i class="livicon" data-name="users" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
                         {{ $title }}
                     </h4>
                     <div class="pull-right">
-                        <a href="{{ route('cpvm.subject.demo.create') }}" class="btn btn-sm btn-default"><span
-                                    class="glyphicon glyphicon-plus"></span> {{ trans('cpvm-subject::language.buttons.create') }}</a>
+                        @if ($USER_LOGGED->canAccess('cpvm.subject.subject.create'))
+                        <a href="{{ route('cpvm.subject.subject.create') }}" class="btn btn-sm btn-default">
+                            <span class="glyphicon glyphicon-plus"></span> 
+                            {{ trans('cpvm-subject::language.buttons.create') }}
+                        </a>
+                        @endif
                     </div>
                 </div>
                 <br/>
@@ -45,10 +49,13 @@
                         <table class="table table-bordered" id="table">
                             <thead>
                             <tr class="filters">
-                                <th class="fit-content">{{ trans('adtech-core::common.sequence') }}</th>
-                                <th>{{ trans('cpvm-subject::language.table.demo.name') }}</th>
-                                <th style="width: 120px">{{ trans('cpvm-subject::language.table.created_at') }}</th>
-                                <th style="width: 120px">{{ trans('cpvm-subject::language.table.updated_at') }}</th>
+                                <th class="fit-content">{{ trans('cpvm-subject::language.table.stt') }}</th>
+                                <th>{{ trans('cpvm-subject::language.table.subject.name') }}</th>
+                                <th>{{ trans('cpvm-subject::language.table.subject.background_color') }}</th>
+                                <th style="width: 130px">{{ trans('cpvm-subject::language.table.subject.icon') }}</th>
+                                <th>{{ trans('cpvm-subject::language.table.subject.background_color_mobile') }}</th>
+                                <th style="width: 130px">{{ trans('cpvm-subject::language.table.subject.icon_mobile') }}</th>
+                                <th>{{ trans('cpvm-subject::language.table.subject.classes') }}</th>
                                 <th>{{ trans('cpvm-subject::language.table.action') }}</th>
                             </tr>
                             </thead>
@@ -70,12 +77,15 @@
             var table = $('#table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('cpvm.subject.demo.data') }}',
+                ajax: '{{ route('cpvm.subject.subject.data') }}',
                 columns: [
-                    { data: 'DT_Row_Index', name: 'id' },
+                    { data: 'rownum', name: 'rownum' },
                     { data: 'name', name: 'name' },
-                    { data: 'created_at', name: 'created_at'},
-                    { data: 'updated_at', name: 'updated_at'},
+                    { data: 'background_color', name: 'background_color'},
+                    { data: 'icon', name: 'icon'},
+                    { data: 'background_color_mobile', name: 'background_color_mobile'},
+                    { data: 'icon_mobile', name: 'icon_mobile'},
+                    { data: 'classes', name: 'classes'},
                     { data: 'actions', name: 'actions', orderable: false, searchable: false, className: 'fit-content'}
                 ]
             });

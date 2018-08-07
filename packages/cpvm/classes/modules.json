@@ -1,70 +1,38 @@
 {
-  "package": "package",
-  "module": "module",
+  "package": "cpvm",
+  "module": "classes",
   "description": "Permission route by group",
   "details": [
     {
-      "name": "Controller 01",
+      "name": "Quản lý lớp",
       "groups": [
         {
           "name": "View list",
           "routes": [
-            "package.module.controller.method",
-            "router name 02"
+            "cpvm.classes.classes.log",
+            "cpvm.classes.classes.data",
+            "cpvm.classes.classes.manage"
           ]
         },
         {
           "name": "Create",
           "routes": [
-            "router name 03",
-            "router name 04"
+            "cpvm.classes.classes.create",
+            "cpvm.classes.classes.add"
           ]
         },
         {
           "name": "Update",
           "routes": [
-            "router name 05",
-            "router name 06"
+            "cpvm.classes.classes.show",
+            "cpvm.classes.classes.udpate"
           ]
         },
         {
           "name": "Delete",
           "routes": [
-            "router name 07",
-            "router name 08"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Controller 02",
-      "groups": [
-        {
-          "name": "View list",
-          "routes": [
-            "router name 11",
-            "router name 12"
-          ]
-        },
-        {
-          "name": "Create",
-          "routes": [
-            "router name 13",
-            "router name 14"
-          ]
-        },
-        {
-          "name": "Update",
-          "routes": [
-            "router name 15",
-            "router name 16"
-          ]
-        },
-        {
-          "name": "Delete",
-          "routes": [
-            "router name 17",
-            "router name 18"
+            "cpvm.classes.classes.confirm-delete",
+            "cpvm.classes.classes.delete"
           ]
         }
       ]

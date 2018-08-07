@@ -13,7 +13,7 @@ class CreateCpvmClassesTable extends Migration
      */
     public function up()
     {
-        Schema::connection('mysql_cpvm')->create('cpvm_classes', function (Blueprint $table) {
+        Schema::connection('mysql_cpvm')->create('classes', function (Blueprint $table) {
             $table->increments('classes_id');
             $table->string('create_by')->comment('cua nguoi dang tin');
             $table->string('name');
@@ -31,7 +31,7 @@ class CreateCpvmClassesTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('level_id')->references('level_id')->on('cpvm_level')->onDelete('cascade');
+            $table->foreign('level_id')->references('level_id')->on('level')->onDelete('cascade');
         });
     }
 
@@ -42,6 +42,6 @@ class CreateCpvmClassesTable extends Migration
      */
     public function down()
     {
-        Schema::connection('mysql_cpvm')->dropIfExists('cpvm_classes');
+        Schema::connection('mysql_cpvm')->dropIfExists('classes');
     }
 }

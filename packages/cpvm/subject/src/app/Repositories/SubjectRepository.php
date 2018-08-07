@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
  * Class DemoRepository
  * @package Cpvm\Subject\Repositories
  */
-class DemoRepository extends Repository
+class SubjectRepository extends Repository
 {
 
     /**
@@ -17,12 +17,15 @@ class DemoRepository extends Repository
      */
     public function model()
     {
-        return 'Cpvm\Subject\App\Models\Demo';
+        return 'Cpvm\Subject\App\Models\Subject';
     }
 
     public function findAll() {
 
-        $result = $this->model::query();
+        DB::statement(DB::raw('set @rownum=0'));
+        $result = $this->model::query()->with('getClass');
+        $result->select('subject.*', DB::raw('@rownum  := @rownum  + 1 AS rownum'));
+
         return $result;
     }
 }

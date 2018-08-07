@@ -12,7 +12,7 @@ class Level extends Model {
      *
      * @var string
      */
-    protected $table = 'cpvm_level';
+    protected $table = 'level';
 
     protected $primaryKey = 'level_id';
 

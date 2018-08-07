@@ -3,14 +3,16 @@ $adminPrefix = config('site.admin_prefix');
 Route::group(array('prefix' => $adminPrefix), function() {
     Route::group(['middleware' => ['adtech.auth', 'adtech.acl']], function () {
 
-        Route::get('cpvm/subject/demo/log', 'DemoController@log')->name('cpvm.subject.demo.log');
-        Route::get('cpvm/subject/demo/data', 'DemoController@data')->name('cpvm.subject.demo.data');
-        Route::get('cpvm/subject/demo/manage', 'DemoController@manage')->name('cpvm.subject.demo.manage');
-        Route::get('cpvm/subject/demo/create', 'DemoController@create')->name('cpvm.subject.demo.create');
-        Route::post('cpvm/subject/demo/add', 'DemoController@add')->name('cpvm.subject.demo.add');
-        Route::get('cpvm/subject/demo/show', 'DemoController@show')->name('cpvm.subject.demo.show');
-        Route::put('cpvm/subject/demo/update', 'DemoController@update')->name('cpvm.subject.demo.update');
-        Route::get('cpvm/subject/demo/delete', 'DemoController@delete')->name('cpvm.subject.demo.delete');
-        Route::get('cpvm/subject/demo/confirm-delete', 'DemoController@getModalDelete')->name('cpvm.subject.demo.confirm-delete');
+        Route::get('cpvm/subject/subject/log', 'SubjectController@log')->name('cpvm.subject.subject.log');
+        Route::get('cpvm/subject/subject/data', 'SubjectController@data')->name('cpvm.subject.subject.data');
+        Route::get('cpvm/subject/subject/manage', 'SubjectController@manage')->name('cpvm.subject.subject.manage')->where('as','Môn - Danh sách');
+        Route::get('cpvm/subject/subject/create', 'SubjectController@create')->name('cpvm.subject.subject.create');
+        Route::post('cpvm/subject/subject/add', 'SubjectController@add')->name('cpvm.subject.subject.add');
+        Route::get('cpvm/subject/subject/show', 'SubjectController@show')->name('cpvm.subject.subject.show');
+        Route::post('cpvm/subject/subject/update', 'SubjectController@update')->name('cpvm.subject.subject.update');
+        Route::get('cpvm/subject/subject/delete', 'SubjectController@delete')->name('cpvm.subject.subject.delete');
+        Route::get('cpvm/subject/subject/confirm-delete', 'SubjectController@getModalDelete')->name('cpvm.subject.subject.confirm-delete');
+
+        Route::get('cpvm/subject/subject/list', 'SubjectController@getSubject')->name('cpvm.subject.subject.list');
     });
 });

@@ -2,39 +2,63 @@
 
 return [
     "titles" => [
-        "demo" => [
-            "manage" => "Manage demo"
+        "subject" => [
+            "manage" => "Quản lý môn",
+            "update" => "Cập nhật môn",
+            "create" => "Thêm mới môn"
         ]
     ],
     "table" => [
         "id" => "#",
-        "created_at" => "Created at",
-        "updated_at" => "Updated at",
-        "action" => "Actions",
-        "demo" => [
-            "name" => "Name"
+        "stt" => "STT",
+        "created_at" => "Ngày tạo",
+        "updated_at" => "Ngày sửa",
+        "action" => "Thao tác",
+        "subject" => [
+            "name" => "Name",
+            "background_color" => "Màu nền",
+            "icon" => "icon",
+            "background_color_mobile" => "Màu nền mobile",
+            "icon_mobile" => "Icon mobile",
+            "classes" => "Thuộc lớp",
         ]
     ],
     "buttons" => [
-        "create" => "Create",
-        "discard" => "Discard"
+        "create" => "Thêm",
+        "update" => "Cập nhật",
+        "discard" => "Hủy"
     ],
     "placeholder" => [
-        "demo" => [
-            "name_here" => "Name here..."
+        "subject" => [
+            "name" => "Nhập tên",
+            "background_color" => "Chọn màu nền",
+            "background_color_mobile" => "Chọn màu nền mobile",
+            "priority" => "Nhập mức ưu tiên",
+        ]
+    ],
+    "label" => [
+        "subject" => [
+            "name" => "Tên",
+            "priority" => "Mức độ ưu tiên",
+            "background_color" => "Màu nền",
+            "icon" => "Chọn icon",
+            "background_color_mobile" => "Màu nền mobile",
+            "icon_mobile" => "Chọn icon mobile",
+            "classes" => "Chọn lớp",
+            "choise_image" => "Chọn ảnh"
         ]
     ],
     "messages" => [
         "success" => [
-            "create" => "Create successfully",
-            "update" => "Update successfully",
-            "delete" => "Delete successfully"
+            "create" => "Thêm thành công",
+            "update" => "Cập nhật thành công",
+            "delete" => "Xóa thành công"
         ],
         "error" => [
             "permission" => "Permission lock",
-            "create" => "Create failed",
-            "update" => "Update failed",
-            "delete" => "Delete failed"
+            "create" => "Thêm thất bại",
+            "update" => "Cập nhật thất bại",
+            "delete" => "Xóa thất bại"
         ]
     ]
 ];

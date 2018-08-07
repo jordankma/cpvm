@@ -12,7 +12,7 @@ use Cpvm\Level\App\Models\Level;
 
 use Spatie\Activitylog\Models\Activity;
 use Yajra\Datatables\Datatables;
-use Validator;
+use Validator,DateTime;
 
 class ClassesController extends Controller
 {
@@ -66,7 +66,8 @@ class ClassesController extends Controller
             $classes->priority = $request->input('priority');
             $classes->color_mobile = $request->input('color_mobile');
             $classes->background_mobile = $request->input('background_mobile');
-
+            $classes->created_at = new DateTime();
+            $classes->updated_at = new DateTime();
             if ($classes->save()) {
                 activity('classes')
                     ->performedOn($classes)
@@ -82,79 +83,106 @@ class ClassesController extends Controller
         }
     }
 
-
-    public function delete(Request $request)
-    {
-        $demo_id = $request->input('demo_id');
-        $demo = $this->demo->find($demo_id);
-
-        if (null != $demo) {
-            $this->demo->delete($demo_id);
-
-            activity('demo')
-                ->performedOn($demo)
-                ->withProperties($request->all())
-                ->log('User: :causer.email - Delete Demo - demo_id: :properties.demo_id, name: ' . $demo->name);
-
-            return redirect()->route('cpvm.classes.demo.manage')->with('success', trans('cpvm-classes::language.messages.success.delete'));
-        } else {
-            return redirect()->route('cpvm.classes.demo.manage')->with('error', trans('cpvm-classes::language.messages.error.delete'));
-        }
-    }
-
     public function show(Request $request)
     {
-        $demo_id = $request->input('demo_id');
-        $demo = $this->demo->find($demo_id);
+        $classes_id = $request->input('classes_id');
+        $classes = $this->classes->find($classes_id);
+        $levels = $this->level->all();
+        if(count($levels)<=0 || $classes==null){
+            return redirect()->route('cpvm.classes.classes.manage')->with('error', trans('Bạn cần thêm cấp trước'));   
+        }
         $data = [
-            'demo' => $demo
+            'classes' => $classes,
+            'levels' => $levels
         ];
-
-        return view('CPVM-CLASSES::modules.classes.demo.edit', $data);
+        return view('CPVM-CLASSES::modules.classes.classes.edit', $data);
     }
 
     public function update(Request $request)
     {
-        $demo_id = $request->input('demo_id');
+        $classes_id = $request->input('classes_id');
 
-        $demo = $this->demo->find($demo_id);
-        $demo->name = $request->input('name');
-
-        if ($demo->save()) {
-
-            activity('demo')
-                ->performedOn($demo)
-                ->withProperties($request->all())
-                ->log('User: :causer.email - Update Demo - demo_id: :properties.demo_id, name: :properties.name');
-
-            return redirect()->route('cpvm.classes.demo.manage')->with('success', trans('cpvm-classes::language.messages.success.update'));
-        } else {
-            return redirect()->route('cpvm.classes.demo.show', ['demo_id' => $request->input('demo_id')])->with('error', trans('cpvm-classes::language.messages.error.update'));
+        $classes = $this->classes->find($classes_id);
+        if($classes==null){
+            return redirect()->route('cpvm.classes.classes.manage')->with('error', trans('cpvm-classes::language.messages.error.update'));   
         }
-    }
 
-    public function getModalDelete(Request $request)
-    {
-        $model = 'demo';
-        $confirm_route = $error = null;
         $validator = Validator::make($request->all(), [
-            'demo_id' => 'required|numeric',
+            'name' => 'required|min:0|max:200',
+            'type' => 'required',
+            'level' => 'required',
+            'priority' => 'required',
+            'color_mobile' => 'required',
+            'background_mobile' => 'required'
         ], $this->messages);
         if (!$validator->fails()) {
-            try {
-                $confirm_route = route('cpvm.classes.demo.delete', ['demo_id' => $request->input('demo_id')]);
-                return view('includes.modal_confirmation', compact('error', 'model', 'confirm_route'));
-            } catch (GroupNotFoundException $e) {
-                return view('includes.modal_confirmation', compact('error', 'model', 'confirm_route'));
+            $classes->name = $request->input('name');
+            $classes->alias = self::stripUnicode($request->input('name'));
+            $classes->type = $request->input('type');
+            $classes->level_id = $request->input('level');
+            $classes->priority = $request->input('priority');
+            $classes->color_mobile = $request->input('color_mobile');
+            $classes->background_mobile = $request->input('background_mobile');
+            $classes->updated_at = new DateTime();
+
+            if ($classes->save()) {
+
+                activity('classes')
+                    ->performedOn($classes)
+                    ->withProperties($request->all())
+                    ->log('User: :causer.email - Update classes - classes_id: :properties.classes_id, name: :properties.name');
+
+                return redirect()->route('cpvm.classes.classes.manage')->with('success', trans('cpvm-classes::language.messages.success.update'));
+            } else {
+                return redirect()->route('cpvm.classes.classes.show', ['classes_id' => $request->input('classes_id')])->with('error', trans('cpvm-classes::language.messages.error.update'));
             }
         } else {
             return $validator->messages();
         }
     }
 
+    public function getModalDelete(Request $request)
+    {
+        $model = 'classes';
+        $type = 'delete';
+        $confirm_route = $error = null;
+        $validator = Validator::make($request->all(), [
+            'classes_id' => 'required|numeric',
+        ], $this->messages);
+        if (!$validator->fails()) {
+            try {
+                $confirm_route = route('cpvm.classes.classes.delete', ['classes_id' => $request->input('classes_id')]);
+                return view('CPVM-CLASSES::modules.modal.modal_confirmation', compact('error','type', 'model', 'confirm_route'));
+            } catch (GroupNotFoundException $e) {
+                return view('CPVM-CLASSES::modules.modal.modal_confirmation', compact('error','type', 'model', 'confirm_route'));
+            }
+        } else {
+            return $validator->messages();
+        }
+    }
+
+    public function delete(Request $request)
+    {
+        $classes_id = $request->input('classes_id');
+        $classes = $this->classes->find($classes_id);
+
+        if (null != $classes) {
+            $this->classes->delete($classes_id);
+
+            activity('classes')
+                ->performedOn($classes)
+                ->withProperties($request->all())
+                ->log('User: :causer.email - Delete classes - classes_id: :properties.classes_id, name: ' . $classes->name);
+
+            return redirect()->route('cpvm.classes.classes.manage')->with('success', trans('cpvm-classes::language.messages.success.delete'));
+        } else {
+            return redirect()->route('cpvm.classes.classes.manage')->with('error', trans('cpvm-classes::language.messages.error.delete'));
+        }
+    }
+
     public function log(Request $request)
     {
-        $model = 'demo';
+        $model = 'classes';
         $confirm_route = $error = null;
         $validator = Validator::make($request->all(), [
             'type' => 'required',
@@ -166,9 +194,9 @@ class ClassesController extends Controller
                     ['log_name', $model],
                     ['subject_id', $request->input('id')]
                 ])->get();
-                return view('includes.modal_table', compact('error', 'model', 'confirm_route', 'logs'));
+                return view('CPVM-CLASSES::modules.modal.modal_table', compact('error', 'model', 'confirm_route', 'logs'));
             } catch (GroupNotFoundException $e) {
-                return view('includes.modal_table', compact('error', 'model', 'confirm_route'));
+                return view('CPVM-CLASSES::modules.modal.modal_table', compact('error', 'model', 'confirm_route'));
             }
         } else {
             return $validator->messages();
@@ -195,7 +223,7 @@ class ClassesController extends Controller
                 return $actions;
             })
             ->addColumn('background_mobile', function ($classes) {
-                $background_mobile = '<img  style="width:100px;height:100px"src="'.$classes->background_mobile.'">'; 
+                $background_mobile = '<img style="width:100px;height:100px"src="'.$classes->background_mobile.'">'; 
                 return $background_mobile;   
             })
             ->addColumn('color_mobile', function ($classes) {
