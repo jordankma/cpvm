@@ -49,10 +49,8 @@
                         <table class="table table-bordered" id="table">
                             <thead>
                             <tr class="filters">
-                                <th class="fit-content">{{ trans('adtech-core::common.sequence') }}</th>
-                                <th>{{ trans('cpvm-block::language.table.demo.name') }}</th>
-                                <th style="width: 120px">{{ trans('cpvm-block::language.table.created_at') }}</th>
-                                <th style="width: 120px">{{ trans('cpvm-block::language.table.updated_at') }}</th>
+                                <th class="fit-content">{{ trans('cpvm-block::language.table.stt') }}</th>
+                                <th>{{ trans('cpvm-block::language.table.block.name') }}</th>
                                 <th>{{ trans('cpvm-block::language.table.action') }}</th>
                             </tr>
                             </thead>
@@ -76,10 +74,8 @@
                 serverSide: true,
                 ajax: '{{ route('cpvm.block.block.data') }}',
                 columns: [
-                    { data: 'DT_Row_Index', name: 'id' },
+                    { data: 'rownum', name: 'rownum' },
                     { data: 'name', name: 'name' },
-                    { data: 'created_at', name: 'created_at'},
-                    { data: 'updated_at', name: 'updated_at'},
                     { data: 'actions', name: 'actions', orderable: false, searchable: false, className: 'fit-content'}
                 ]
             });

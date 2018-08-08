@@ -8,10 +8,11 @@ use Cpvm\Block\App\Repositories\BlockRepository;
 use Cpvm\Block\App\Models\Block;
 
 use Cpvm\Classes\App\Models\Classes;
+use Cpvm\Subject\App\Models\Subject;
 
 use Spatie\Activitylog\Models\Activity;
 use Yajra\Datatables\Datatables;
-use Validator;
+use Validator,DateTime,DB;
 
 class BlockController extends Controller
 {
@@ -46,66 +47,151 @@ class BlockController extends Controller
 
     public function add(Request $request)
     {
-        $demos = new Demo($request->all());
-        $demos->save();
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'classes' => 'required',
+            'subject_id' => 'required'
+        ], $this->messages);
+        if (!$validator->fails()) {
+            $blocks = new Block();
+            $blocks->name = $request->input('name');
+            $blocks->alias = self::stripUnicode($request->input('name'));
+            $blocks->create_by = $this->user->email;
+            $blocks->created_at = new DateTime();
+            $blocks->updated_at = new DateTime();
+            if ($blocks->save()) {
+                $block_id = $blocks->block_id;
+                if(!empty($request->input('classes'))){
+                    foreach ($request->input('classes') as $class_id) {
+                        DB::table('block_has_class')->insert([
+                            'block_id' => $block_id,
+                            'classes_id' => $class_id
+                        ]);
+                    }
+                }
+                if(!empty($request->input('subject_id'))){
+                    foreach ($request->input('subject_id') as $subject_id) {
+                        DB::table('block_has_subject')->insert([
+                            'block_id' => $block_id,
+                            'subject_id' => $subject_id
+                        ]);
+                    }
+                }
+                activity('block')
+                    ->performedOn($blocks)
+                    ->withProperties($request->all())
+                    ->log('User: :causer.email - Add block - name: :properties.name, block_id: ' . $blocks->block_id);
 
-        if ($demos->demo_id) {
-
-            activity('demo')
-                ->performedOn($demos)
-                ->withProperties($request->all())
-                ->log('User: :causer.email - Add Demo - name: :properties.name, demo_id: ' . $demos->demo_id);
-
-            return redirect()->route('cpvm.block.demo.manage')->with('success', trans('cpvm-block::language.messages.success.create'));
+                return redirect()->route('cpvm.block.block.manage')->with('success', trans('cpvm-block::language.messages.success.create'));
+            } else {
+                return redirect()->route('cpvm.block.block.manage')->with('error', trans('cpvm-block::language.messages.error.create'));
+            }
         } else {
-            return redirect()->route('cpvm.block.demo.manage')->with('error', trans('cpvm-block::language.messages.error.create'));
+            return $validator->messages();
         }
     }
 
     public function show(Request $request)
     {
-        $demo_id = $request->input('demo_id');
-        $demo = $this->demo->find($demo_id);
-        $data = [
-            'demo' => $demo
-        ];
+        $validator = Validator::make($request->all(), [
+            'block_id' => 'required|numeric',
+        ], $this->messages);
+        if (!$validator->fails()) {
+            $block_id = $request->input('block_id');
+            $block = $this->block->find($block_id);
+            if($block==null){
+                return redirect()->route('cpvm.block.block.manage')->with('error', trans('cpvm-block::language.messages.error.update')); 
+            }
+            //get id
+            $class = DB::table('block_has_class')->where('block_id', $block_id)->select('classes_id')->get()->toArray();
+            $subject = DB::table('block_has_subject')->where('block_id', $block_id)->select('subject_id')->get()->toArray();
+            if(!empty($subject)){
+                foreach ($subject as $item) {
+                    $subject_id[] = $item->subject_id;
+                }
+            }
+            if(!empty($class)){
+                foreach ($class as $value) {
+                    $class_id[] = $value->classes_id;
+                }
+            }
+            //get class subject
+            $classes = Classes::all();
+            $subjects = Subject::all();
+            $data = [
+                'block' => $block,
+                'subject_id' => $subject_id,
+                'class_id' => $class_id,
+                'classes' => $classes,
+                'subjects' => $subjects
+            ];
 
-        return view('CPVM-BLOCK::modules.block.demo.edit', $data);
+            return view('CPVM-BLOCK::modules.block.block.edit', $data);
+        } else {
+            return $validator->messages();
+        }
     }
 
     public function update(Request $request)
     {
-        $demo_id = $request->input('demo_id');
+        $validator = Validator::make($request->all(), [
+            'block_id' => 'required|numeric',
+        ], $this->messages);
+        if (!$validator->fails()) {
+            $block_id = $request->input('block_id');
 
-        $demo = $this->demo->find($demo_id);
-        $demo->name = $request->input('name');
+            $block = $this->block->find($block_id);
+            $block->name = $request->input('name');
+            $block->alias = self::stripUnicode($request->input('name'));
+            $block->updated_at = new DateTime();
 
-        if ($demo->save()) {
+            if ($block->save()) {
+                DB::table('block_has_class')->where('block_id', $block_id)->delete();
+                DB::table('block_has_subject')->where('block_id', $block_id)->delete();
+                if(!empty($request->input('classes'))){
+                    foreach ($request->input('classes') as $class_id) {
+                        DB::table('block_has_class')->insert([
+                            'block_id' => $block_id,
+                            'classes_id' => $class_id
+                        ]);
+                    }
+                }
+                if(!empty($request->input('subject_id'))){
+                    foreach ($request->input('subject_id') as $subject_id) {
+                        DB::table('block_has_subject')->insert([
+                            'block_id' => $block_id,
+                            'subject_id' => $subject_id
+                        ]);
+                    }
+                }
+                activity('block')
+                    ->performedOn($block)
+                    ->withProperties($request->all())
+                    ->log('User: :causer.email - Update block - block_id: :properties.block_id, name: :properties.name');
 
-            activity('demo')
-                ->performedOn($demo)
-                ->withProperties($request->all())
-                ->log('User: :causer.email - Update Demo - demo_id: :properties.demo_id, name: :properties.name');
-
-            return redirect()->route('cpvm.block.demo.manage')->with('success', trans('cpvm-block::language.messages.success.update'));
+                return redirect()->route('cpvm.block.block.manage')->with('success', trans('cpvm-block::language.messages.success.update'));
+            } else {
+                return redirect()->route('cpvm.block.block.show', ['block_id' => $request->input('block_id')])->with('error', trans('cpvm-block::language.messages.error.update'));
+            }
         } else {
-            return redirect()->route('cpvm.block.demo.show', ['demo_id' => $request->input('demo_id')])->with('error', trans('cpvm-block::language.messages.error.update'));
+            return $validator->messages();
         }
     }
 
     public function getModalDelete(Request $request)
     {
-        $model = 'demo';
+        $model = 'block';
+        $type = 'delete';
         $confirm_route = $error = null;
         $validator = Validator::make($request->all(), [
-            'demo_id' => 'required|numeric',
+            'block_id' => 'required|numeric',
         ], $this->messages);
         if (!$validator->fails()) {
             try {
-                $confirm_route = route('cpvm.block.demo.delete', ['demo_id' => $request->input('demo_id')]);
-                return view('includes.modal_confirmation', compact('error', 'model', 'confirm_route'));
+                $confirm_route = route('cpvm.block.block.delete', ['block_id' => $request->input('block_id')]);
+                return view('CPVM-BLOCK::modules.block.modal.modal_confirmation', compact('error','type', 'model', 'confirm_route'));
             } catch (GroupNotFoundException $e) {
-                return view('includes.modal_confirmation', compact('error', 'model', 'confirm_route'));
+                return view('CPVM-BLOCK::modules.block.modal.modal_confirmation', compact('error','type', 'model', 'confirm_route'));
             }
         } else {
             return $validator->messages();
@@ -114,26 +200,27 @@ class BlockController extends Controller
 
     public function delete(Request $request)
     {
-        $demo_id = $request->input('demo_id');
-        $demo = $this->demo->find($demo_id);
+        $block_id = $request->input('block_id');
+        $block = $this->block->find($block_id);
 
-        if (null != $demo) {
-            $this->demo->delete($demo_id);
-
-            activity('demo')
-                ->performedOn($demo)
+        if (null != $block) {
+            $this->block->delete($block_id);
+            DB::table('block_has_class')->where('block_id', $block_id)->delete();
+            DB::table('block_has_subject')->where('block_id', $block_id)->delete();
+            activity('block')
+                ->performedOn($block)
                 ->withProperties($request->all())
-                ->log('User: :causer.email - Delete Demo - demo_id: :properties.demo_id, name: ' . $demo->name);
+                ->log('User: :causer.email - Delete block - block_id: :properties.block_id, name: ' . $block->name);
 
-            return redirect()->route('cpvm.block.demo.manage')->with('success', trans('cpvm-block::language.messages.success.delete'));
+            return redirect()->route('cpvm.block.block.manage')->with('success', trans('cpvm-block::language.messages.success.delete'));
         } else {
-            return redirect()->route('cpvm.block.demo.manage')->with('error', trans('cpvm-block::language.messages.error.delete'));
+            return redirect()->route('cpvm.block.block.manage')->with('error', trans('cpvm-block::language.messages.error.delete'));
         }
     }
 
     public function log(Request $request)
     {
-        $model = 'demo';
+        $model = 'block';
         $confirm_route = $error = null;
         $validator = Validator::make($request->all(), [
             'type' => 'required',
@@ -145,9 +232,9 @@ class BlockController extends Controller
                     ['log_name', $model],
                     ['subject_id', $request->input('id')]
                 ])->get();
-                return view('includes.modal_table', compact('error', 'model', 'confirm_route', 'logs'));
+                return view('CPVM-BLOCK::modules.block.modal.modal_table', compact('error', 'model', 'confirm_route', 'logs'));
             } catch (GroupNotFoundException $e) {
-                return view('includes.modal_table', compact('error', 'model', 'confirm_route'));
+                return view('CPVM-BLOCK::modules.block.modal.modal_table', compact('error', 'model', 'confirm_route'));
             }
         } else {
             return $validator->messages();
@@ -157,12 +244,19 @@ class BlockController extends Controller
     //Table Data to index page
     public function data()
     {
-        return Datatables::of($this->demo->findAll())
-            ->addColumn('actions', function ($demos) {
-                $actions = '<a href=' . route('cpvm.block.demo.log', ['type' => 'demo', 'id' => $demos->demo_id]) . ' data-toggle="modal" data-target="#log"><i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#F99928" data-hc="#F99928" title="log demo"></i></a>
-                        <a href=' . route('cpvm.block.demo.show', ['demo_id' => $demos->demo_id]) . '><i class="livicon" data-name="edit" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="update demo"></i></a>
-                        <a href=' . route('cpvm.block.demo.confirm-delete', ['demo_id' => $demos->demo_id]) . ' data-toggle="modal" data-target="#delete_confirm"><i class="livicon" data-name="trash" data-size="18" data-loop="true" data-c="#f56954" data-hc="#f56954" title="delete demo"></i></a>';
-
+        $blocks = $this->block->findAll();
+        return Datatables::of($blocks)
+            ->addColumn('actions', function ($blocks) {
+                $actions = '';
+                if ($this->user->canAccess('cpvm.block.block.log')) {
+                    $actions .= '<a href=' . route('cpvm.block.block.log', ['type' => 'block', 'id' => $blocks->block_id]) . ' data-toggle="modal" data-target="#log"><i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#F99928" data-hc="#F99928" title="log block"></i></a>';
+                }
+                if ($this->user->canAccess('cpvm.block.block.show')) {
+                    $actions .= '<a href=' . route('cpvm.block.block.show', ['block_id' => $blocks->block_id]) . '><i class="livicon" data-name="edit" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="update block"></i></a>';
+                }
+                if ($this->user->canAccess('cpvm.block.block.confirm-delete')) {
+                    $actions .= '<a href=' . route('cpvm.block.block.confirm-delete', ['block_id' => $blocks->block_id]) . ' data-toggle="modal" data-target="#delete_confirm"><i class="livicon" data-name="trash" data-size="18" data-loop="true" data-c="#f56954" data-hc="#f56954" title="delete block"></i></a>';
+                }
                 return $actions;
             })
             ->addIndexColumn()

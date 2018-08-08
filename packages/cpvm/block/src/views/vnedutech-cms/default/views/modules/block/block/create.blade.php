@@ -45,7 +45,7 @@
                         <div class="col-sm-3">
                             <label>{{ trans('cpvm-block::language.label.block.classes') }}</label>
                             <div class="form-group">
-                                <select class="form-control" name="classes[]" id="classes" multiple="multiple">
+                                <select class="form-control" name="classes[]" id="classes" multiple="multiple" required="">
                                     @if(!empty($classes))
                                         @foreach($classes as $key => $value)
                                             <option value="{{$value->classes_id}}">{{$value->name}}</option>
@@ -57,7 +57,7 @@
                         <div class="col-sm-3">
                             <label>{{ trans('cpvm-block::language.label.block.subject') }}</label>
                             <div class="form-group" id="data_subject">
-                                <select class="form-control" name="subject_id[]" id="subject_id" multiple="multiple">
+                                <select class="form-control" name="subject_id[]" id="subject_id" multiple="multiple" required="">
 
                                 </select>
                             </div>
@@ -101,6 +101,24 @@
                 buttonWidth: '100%',
                 nonSelectedText: 'Chọn lớp',
                 enableFiltering: true,
+            });
+            $('#form-add-block').bootstrapValidator({
+                feedbackIcons: {
+                    // validating: 'glyphicon glyphicon-refresh', vao db a xem cai
+                },
+                fields: {
+                    name: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Trường này không được bỏ trống'
+                            },
+                            stringLength: {
+                                max: 200,
+                                message: 'Trường này không được quá dài'
+                            }
+                        }
+                    }
+                }
             });
             $('body').on('change', '#classes', function (e) {
                 e.preventDefault();
