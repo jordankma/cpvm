@@ -105,6 +105,8 @@ class BlockController extends Controller
             //get id
             $class = DB::table('block_has_class')->where('block_id', $block_id)->select('classes_id')->get()->toArray();
             $subject = DB::table('block_has_subject')->where('block_id', $block_id)->select('subject_id')->get()->toArray();
+            $subject_id = array();
+            $class_id = array();
             if(!empty($subject)){
                 foreach ($subject as $item) {
                     $subject_id[] = $item->subject_id;
@@ -224,7 +226,7 @@ class BlockController extends Controller
         $confirm_route = $error = null;
         $validator = Validator::make($request->all(), [
             'type' => 'required',
-            'id' => 'required|numeric',
+            'id' => 'required|numeric'
         ], $this->messages);
         if (!$validator->fails()) {
             try {

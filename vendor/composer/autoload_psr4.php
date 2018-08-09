@@ -74,6 +74,7 @@ return array(
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
     'Cron\\' => array($vendorDir . '/dragonmantank/cron-expression/src/Cron'),
     'Cpvm\\Subject\\' => array($baseDir . '/packages/cpvm/subject/src'),
+    'Cpvm\\Member\\' => array($baseDir . '/packages/cpvm/member/src'),
     'Cpvm\\Level\\' => array($baseDir . '/packages/cpvm/level/src'),
     'Cpvm\\Classes\\' => array($baseDir . '/packages/cpvm/classes/src'),
     'Cpvm\\Block\\' => array($baseDir . '/packages/cpvm/block/src'),

@@ -149,6 +149,7 @@ class ComposerStaticInitfd4f5ae2ab00e73caf8371ecb4ea05b1
         array (
             'Cron\\' => 5,
             'Cpvm\\Subject\\' => 13,
+            'Cpvm\\Member\\' => 12,
             'Cpvm\\Level\\' => 11,
             'Cpvm\\Classes\\' => 13,
             'Cpvm\\Block\\' => 11,
@@ -445,6 +446,10 @@ class ComposerStaticInitfd4f5ae2ab00e73caf8371ecb4ea05b1
         'Cpvm\\Subject\\' => 
         array (
             0 => __DIR__ . '/../..' . '/packages/cpvm/subject/src',
+        ),
+        'Cpvm\\Member\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/packages/cpvm/member/src',
         ),
         'Cpvm\\Level\\' => 
         array (
@@ -811,6 +816,10 @@ class ComposerStaticInitfd4f5ae2ab00e73caf8371ecb4ea05b1
         'Cpvm\\Level\\App\\Models\\Level' => __DIR__ . '/../..' . '/packages/cpvm/level/src/app/Models/Level.php',
         'Cpvm\\Level\\App\\Repositories\\LevelRepository' => __DIR__ . '/../..' . '/packages/cpvm/level/src/app/Repositories/LevelRepository.php',
         'Cpvm\\Level\\LevelServiceProvider' => __DIR__ . '/../..' . '/packages/cpvm/level/src/LevelServiceProvider.php',
+        'Cpvm\\Member\\App\\Http\\Controllers\\DemoController' => __DIR__ . '/../..' . '/packages/cpvm/member/src/app/Http/Controllers/DemoController.php',
+        'Cpvm\\Member\\App\\Models\\Demo' => __DIR__ . '/../..' . '/packages/cpvm/member/src/app/Models/Demo.php',
+        'Cpvm\\Member\\App\\Repositories\\DemoRepository' => __DIR__ . '/../..' . '/packages/cpvm/member/src/app/Repositories/DemoRepository.php',
+        'Cpvm\\Member\\MemberServiceProvider' => __DIR__ . '/../..' . '/packages/cpvm/member/src/MemberServiceProvider.php',
         'Cpvm\\Subject\\App\\Http\\Controllers\\SubjectController' => __DIR__ . '/../..' . '/packages/cpvm/subject/src/app/Http/Controllers/SubjectController.php',
         'Cpvm\\Subject\\App\\Models\\ClassHasSubject' => __DIR__ . '/../..' . '/packages/cpvm/subject/src/app/Models/ClassHasSubject.php',
         'Cpvm\\Subject\\App\\Models\\Subject' => __DIR__ . '/../..' . '/packages/cpvm/subject/src/app/Models/Subject.php',

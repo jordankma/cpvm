@@ -109,7 +109,7 @@
             });
             $('#form-add-block').bootstrapValidator({
                 feedbackIcons: {
-                    // validating: 'glyphicon glyphicon-refresh', vao db a xem cai
+                    // validating: 'glyphicon glyphicon-refresh',
                 },
                 fields: {
                     name: {
